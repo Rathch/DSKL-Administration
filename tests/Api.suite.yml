@@ -1,0 +1,21 @@
+actor: ApiTester
+extensions:
+  enabled:
+    #- Codeception\Extension\RunFailed
+    - Codeception\Extension\Recorder
+    - Codeception\Extension\RunFailed
+    - Codeception\Extension\Teststatistics
+modules:
+    enabled:
+        - Symfony:
+              app_path: 'src'
+              environment: 'test'
+              part: services
+        - REST:
+              depends: Symfony
+              part: Json
+        - Doctrine2:
+              depends: Symfony
+              cleanup: true
+        - \App\Tests\Helper\Api
+        - Asserts

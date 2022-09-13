@@ -1,0 +1,14 @@
+{% extends "baseerror.html.twig" %}
+{% block title %}
+    Zugriff verweigert / Bitte Anmelden
+{% endblock %}
+{% block body %}
+    <div style="width: 100%; text-align: center">
+        <h1>
+            Zugriff verweigert / Bitte Anmelden
+        </h1>
+        <h2>
+            <a href="{{ path('sonata_user_admin_security_login') }}">Login</a>
+        </h2>
+    </div>
+{% endblock %}

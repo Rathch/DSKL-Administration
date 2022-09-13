@@ -1,0 +1,17 @@
+# config/packages/sonata_admin.yaml
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
+        role_admin: ROLE_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN
+    templates:
+        dashboard: 'admin/dashboard.html.twig'
+    title:      DSKL Administration
+    title_logo: https://shadowhelix.de/images/3/38/Logo_Deutsche_Stadtkriegsliga.png
+    options:
+        skin: 'skin-black'
+sonata_block:
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]

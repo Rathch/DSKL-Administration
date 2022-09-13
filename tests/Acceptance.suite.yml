@@ -1,0 +1,41 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+extensions:
+  enabled:
+    #- Codeception\Extension\RunFailed
+    - Codeception\Extension\Recorder
+    - Codeception\Extension\RunFailed
+    - Codeception\Extension\Teststatistics
+  config:
+    Codeception\Extension\Recorder:
+      delete_successful: false # keep screenshots of successful tests
+      delete_orphaned: true # keep only one lvl of screens
+modules:
+    enabled:
+      - Symfony:
+          environment: 'test'
+          app_path: src
+          part: services
+          cache_router: ‘false’
+      - Doctrine2:
+          depends: Symfony
+          cleanup: true
+      - Asserts
+      - WebDriver:
+          url: https://dpx-general-api.dpx.docker
+          browser: chrome
+          start: true
+          wait: 3
+          restart: true
+          host: dpx-general-api-chrome
+gherkin: [
+        contexts:
+            default:
+                - AcceptanceTester
+                - AdditionalSteps
+]

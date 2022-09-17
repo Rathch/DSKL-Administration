@@ -6,6 +6,7 @@ sonata_admin:
         role_super_admin: ROLE_SUPER_ADMIN
     templates:
         dashboard: 'admin/dashboard.html.twig'
+        list: 'admin/list.html.twig'
     title:      DSKL Administration
     title_logo: https://shadowhelix.de/images/3/38/Logo_Deutsche_Stadtkriegsliga.png
     options:

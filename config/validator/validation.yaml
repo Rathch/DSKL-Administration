@@ -1,0 +1,10 @@
+App\Entity\Encounter:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [team1]
+        errorPath: team1
+        message: 'bar'
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [team1]
+        errorPath: team2
+        message: 'foooo'

@@ -46,3 +46,18 @@ services:
         class: App\Admin\EncounterAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: admin, label: Encounter }
+
+    admin.play_day:
+        class: App\Admin\PlayDayAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: admin, label: PlayDay }
+
+    admin.league:
+        class: App\Admin\LeagueAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
+
+    admin.league_statistic:
+        class: App\Admin\LeagueStatisticAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\LeagueStatistic, controller: ~, manager_type: orm, group: admin, label: LeagueStatistic }

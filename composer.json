@@ -103,6 +103,7 @@
         "codeception/module-rest": "^2.0",
         "codeception/module-symfony": "^2.1",
         "codeception/module-webdriver": "^2.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.19",
         "rector/rector": "^0.12.23",
         "redcomponent/teststatistics": "^2.2",
@@ -116,7 +117,7 @@
     "extra": {
         "public-dir": "web",
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.4.*"
         }
     }

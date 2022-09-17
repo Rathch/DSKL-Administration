@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Doctrine\Enum\Injury;
+
 use App\Repository\EncounterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 
 /**
@@ -22,37 +24,23 @@ class Encounter
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private int $chance_t1;
+    private  $chanceTeam1;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private int $chance_t2;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $points_t1;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $points_t2;
-
-
-
+    private  $chanceTeam2;
 
     /**
-     * @ORM\OneToOne(targetEntity=Team::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private Team $team_1;
+    private  $pointsTeam1;
 
     /**
-     * @ORM\OneToOne(targetEntity=Team::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private Team $team_2;
+    private $pointsTeam2;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -60,14 +48,64 @@ class Encounter
     private $report;
 
     /**
-     * @ORM\OneToMany(targetEntity=Injury::class, mappedBy="encounter")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $injuries_t1;
+    private $injuryTeam1Leicht;
 
-    public function __construct()
-    {
-        $this->injuries_t1 = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam1Schwer;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam1Kritisch;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam1Tot;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam2Leicht;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam2Schwer;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam2Kritisch;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $injuryTeam2Tot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PlayDay::class, inversedBy="encounters")
+     */
+    private $playDay;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="encounters")
+     */
+    private $team1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="encounters")
+     */
+    private $team2;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $winningTeam;
 
     /**
      * @return mixed
@@ -88,141 +126,265 @@ class Encounter
     /**
      * @return mixed
      */
-    public function getChanceT1()
+    public function getChanceTeam1()
     {
-        return $this->chance_t1;
+        return $this->chanceTeam1;
     }
 
     /**
-     * @param mixed $chance_t1
+     * @param mixed $chanceTeam1
      */
-    public function setChanceT1($chance_t1): void
+    public function setChanceTeam1($chanceTeam1): void
     {
-        $this->chance_t1 = $chance_t1;
+        $this->chanceTeam1 = $chanceTeam1;
     }
 
     /**
      * @return mixed
      */
-    public function getChanceT2()
+    public function getChanceTeam2()
     {
-        return $this->chance_t2;
+        return $this->chanceTeam2;
     }
 
     /**
-     * @param mixed $chance_t2
+     * @param mixed $chanceTeam2
      */
-    public function setChanceT2($chance_t2): void
+    public function setChanceTeam2($chanceTeam2): void
     {
-        $this->chance_t2 = $chance_t2;
+        $this->chanceTeam2 = $chanceTeam2;
     }
 
-    /**
-     * @return int
-     */
-    public function getPointsT1(): int
-    {
-        return $this->points_t1;
-    }
-
-    /**
-     * @param int $points_t1
-     */
-    public function setPointsT1(int $points_t1): void
-    {
-        $this->points_t1 = $points_t1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPointsT2(): int
-    {
-        return $this->points_t2;
-    }
-
-    /**
-     * @param int $points_t2
-     */
-    public function setPointsT2(int $points_t2): void
-    {
-        $this->points_t2 = $points_t2;
-    }
 
 
     /**
-     * @return Team
+     * @return mixed
      */
-    public function getTeam1()
+    public function getPointsTeam1()
     {
-        return $this->team_1;
+        return $this->pointsTeam1;
     }
 
     /**
-     * @param Team $team_1
+     * @param mixed $pointsTeam1
      */
-    public function setTeam1(Team $team_1): void
+    public function setPointsTeam1($pointsTeam1): void
     {
-        $this->team_1 = $team_1;
+        $this->pointsTeam1 = $pointsTeam1;
     }
 
     /**
-     * @return Team
+     * @return mixed
      */
-    public function getTeam2()
+    public function getPointsTeam2()
     {
-        return $this->team_2;
+        return $this->pointsTeam2;
     }
 
     /**
-     * @param Team $team_2
+     * @param mixed $pointsTeam2
      */
-    public function setTeam2(Team $team_2): void
+    public function setPointsTeam2($pointsTeam2): void
     {
-        $this->team_2 = $team_2;
+        $this->pointsTeam2 = $pointsTeam2;
     }
 
-    public function getReport(): ?string
+
+
+    /**
+     * @return mixed
+     */
+    public function getReport()
     {
         return $this->report;
     }
 
-    public function setReport(?string $report): self
+    /**
+     * @param mixed $report
+     */
+    public function setReport($report): void
     {
         $this->report = $report;
-
-        return $this;
     }
 
     /**
-     * @return Collection<int, Injury>
+     * @return mixed
      */
-    public function getInjuriesT1(): Collection
+    public function getInjuryTeam1Leicht()
     {
-        return $this->injuries_t1;
+        return $this->injuryTeam1Leicht;
     }
 
-    public function addInjuriesT1(Injury $injuriesT1): self
+    /**
+     * @param mixed $injuryTeam1Leicht
+     */
+    public function setInjuryTeam1Leicht($injuryTeam1Leicht): void
     {
-        if (!$this->injuries_t1->contains($injuriesT1)) {
-            $this->injuries_t1[] = $injuriesT1;
-            $injuriesT1->setEncounter($this);
-        }
+        $this->injuryTeam1Leicht = $injuryTeam1Leicht;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam1Schwer()
+    {
+        return $this->injuryTeam1Schwer;
+    }
+
+    /**
+     * @param mixed $injuryTeam1Schwer
+     */
+    public function setInjuryTeam1Schwer($injuryTeam1Schwer): void
+    {
+        $this->injuryTeam1Schwer = $injuryTeam1Schwer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam1Kritisch()
+    {
+        return $this->injuryTeam1Kritisch;
+    }
+
+    /**
+     * @param mixed $injuryTeam1Kritisch
+     */
+    public function setInjuryTeam1Kritisch($injuryTeam1Kritisch): void
+    {
+        $this->injuryTeam1Kritisch = $injuryTeam1Kritisch;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam1Tot()
+    {
+        return $this->injuryTeam1Tot;
+    }
+
+    /**
+     * @param mixed $injuryTeam1Tot
+     */
+    public function setInjuryTeam1Tot($injuryTeam1Tot): void
+    {
+        $this->injuryTeam1Tot = $injuryTeam1Tot;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam2Leicht()
+    {
+        return $this->injuryTeam2Leicht;
+    }
+
+    /**
+     * @param mixed $injuryTeam2Leicht
+     */
+    public function setInjuryTeam2Leicht($injuryTeam2Leicht): void
+    {
+        $this->injuryTeam2Leicht = $injuryTeam2Leicht;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam2Schwer()
+    {
+        return $this->injuryTeam2Schwer;
+    }
+
+    /**
+     * @param mixed $injuryTeam2Schwer
+     */
+    public function setInjuryTeam2Schwer($injuryTeam2Schwer): void
+    {
+        $this->injuryTeam2Schwer = $injuryTeam2Schwer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam2Kritisch()
+    {
+        return $this->injuryTeam2Kritisch;
+    }
+
+    /**
+     * @param mixed $injuryTeam2Kritisch
+     */
+    public function setInjuryTeam2Kritisch($injuryTeam2Kritisch): void
+    {
+        $this->injuryTeam2Kritisch = $injuryTeam2Kritisch;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInjuryTeam2Tot()
+    {
+        return $this->injuryTeam2Tot;
+    }
+
+    /**
+     * @param mixed $injuryTeam2Tot
+     */
+    public function setInjuryTeam2Tot($injuryTeam2Tot): void
+    {
+        $this->injuryTeam2Tot = $injuryTeam2Tot;
+    }
+
+    public function getPlayDay(): ?PlayDay
+    {
+        return $this->playDay;
+    }
+
+    public function setPlayDay(?PlayDay $playDay): self
+    {
+        $this->playDay = $playDay;
 
         return $this;
     }
 
-    public function removeInjuriesT1(Injury $injuriesT1): self
+    public function getTeam1(): ?Team
     {
-        if ($this->injuries_t1->removeElement($injuriesT1)) {
-            // set the owning side to null (unless already changed)
-            if ($injuriesT1->getEncounter() === $this) {
-                $injuriesT1->setEncounter(null);
-            }
-        }
+        return $this->team1;
+    }
+
+    public function setTeam1(?Team $team1): self
+    {
+        $this->team1 = $team1;
 
         return $this;
     }
+
+    public function getTeam2(): ?Team
+    {
+        return $this->team2;
+    }
+
+    public function setTeam2(?Team $team2): self
+    {
+        $this->team2 = $team2;
+
+        return $this;
+    }
+
+    public function getWinningTeam(): ?int
+    {
+        return $this->winningTeam;
+    }
+
+    public function setWinningTeam(?int $winningTeam): self
+    {
+        $this->winningTeam = $winningTeam;
+
+        return $this;
+    }
+
+
+
 
 
 }

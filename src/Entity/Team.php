@@ -61,6 +61,27 @@ class Team
 
     private $power;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Encounter::class, mappedBy="team1")
+     */
+    private $encounters;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="teams")
+     */
+    private $teamStatistics;
+
+    public function __construct()
+    {
+        $this->encounters = new ArrayCollection();
+        $this->teamStatistics = new ArrayCollection();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -187,6 +208,78 @@ class Team
     public function getPower(): int
     {
         return $this->getBrutality()+$this->getProfessionalism()+$this->getRobustness()+$this->getDefensive()+$this->getOffensive()+$this->getSpirit()+$this->getTactics();
+    }
+
+    /**
+     * @return Collection<int, Encounter>
+     */
+    public function getEncounters(): Collection
+    {
+        return $this->encounters;
+    }
+
+    public function addEncounter(Encounter $encounter): self
+    {
+        if (!$this->encounters->contains($encounter)) {
+            $this->encounters[] = $encounter;
+            $encounter->setTeam1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncounter(Encounter $encounter): self
+    {
+        if ($this->encounters->removeElement($encounter)) {
+            // set the owning side to null (unless already changed)
+            if ($encounter->getTeam1() === $this) {
+                $encounter->setTeam1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TeamStatistic>
+     */
+    public function getTeamStatistics(): Collection
+    {
+        return $this->teamStatistics;
+    }
+
+    public function addTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if (!$this->teamStatistics->contains($teamStatistic)) {
+            $this->teamStatistics[] = $teamStatistic;
+            $teamStatistic->setTeams($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if ($this->teamStatistics->removeElement($teamStatistic)) {
+            // set the owning side to null (unless already changed)
+            if ($teamStatistic->getTeams() === $this) {
+                $teamStatistic->setTeams(null);
+            }
+        }
+
+        return $this;
     }
 
 

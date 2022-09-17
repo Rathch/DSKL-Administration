@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Entity\Team;
+
 use App\Service\GenerateEncounterService;
 use App\Service\GenerateTeamStatisticService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
@@ -82,5 +83,11 @@ final class LeagueAdmin extends AbstractAdmin
     {
         $this->generateEncounterService->generate($object);
         $this->generateTeamStatisticService->generate($object);
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        $collection
+            ->remove("edit");
     }
 }

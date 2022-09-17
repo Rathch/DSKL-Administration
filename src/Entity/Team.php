@@ -76,6 +76,7 @@ class Team
      */
     private $teamStatistics;
 
+
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
@@ -134,7 +135,7 @@ class Team
     /**
      * @param int $offensive
      */
-    public function setOffensive( int $offensive): void
+    public function setOffensive(int $offensive): void
     {
         $this->offensive = $offensive;
     }
@@ -182,7 +183,7 @@ class Team
     /**
      * @param int $spirit
      */
-    public function setSpirit( int $spirit): void
+    public function setSpirit(int $spirit): void
     {
         $this->spirit = $spirit;
     }
@@ -204,10 +205,9 @@ class Team
     }
 
 
-
     public function getPower(): int
     {
-        return $this->getBrutality()+$this->getProfessionalism()+$this->getRobustness()+$this->getDefensive()+$this->getOffensive()+$this->getSpirit()+$this->getTactics();
+        return $this->getBrutality() + $this->getProfessionalism() + $this->getRobustness() + $this->getDefensive() + $this->getOffensive() + $this->getSpirit() + $this->getTactics();
     }
 
     /**
@@ -264,7 +264,7 @@ class Team
     {
         if (!$this->teamStatistics->contains($teamStatistic)) {
             $this->teamStatistics[] = $teamStatistic;
-            $teamStatistic->setTeams($this);
+            $teamStatistic->setTeam($this);
         }
 
         return $this;
@@ -274,15 +274,11 @@ class Team
     {
         if ($this->teamStatistics->removeElement($teamStatistic)) {
             // set the owning side to null (unless already changed)
-            if ($teamStatistic->getTeams() === $this) {
-                $teamStatistic->setTeams(null);
+            if ($teamStatistic->getTeam() === $this) {
+                $teamStatistic->setTeam(null);
             }
         }
 
         return $this;
     }
-
-
-
-
 }

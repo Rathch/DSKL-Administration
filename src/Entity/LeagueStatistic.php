@@ -27,6 +27,11 @@ class LeagueStatistic
      */
     private $done;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $timestamp;
+
 
 
     public function getId(): ?int
@@ -54,6 +59,18 @@ class LeagueStatistic
     public function setDone(bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getTimestamp(): ?\DateTimeInterface
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(?\DateTimeInterface $timestamp): self
+    {
+        $this->timestamp = $timestamp;
 
         return $this;
     }

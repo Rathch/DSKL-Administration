@@ -130,19 +130,16 @@ class TeamStatistic
     private $rang;
 
     /**
-     * @ORM\OneToOne(targetEntity=Team::class, cascade={"persist", "remove"})
-     */
-    private $team;
-
-    /**
      * @ORM\ManyToOne(targetEntity=League::class, inversedBy="teamStatistics")
      */
     private $league;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="teamStatistics")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="foo")
      */
-    private $teams;
+    private $team;
+
+
 
 
     /**
@@ -360,19 +357,6 @@ class TeamStatistic
         return $this;
     }
 
-    public function getTeam(): ?Team
-    {
-        return $this->team;
-    }
-
-    public function setTeam(?Team $team): self
-    {
-        $this->team = $team;
-
-        return $this;
-    }
-
-
 
     /**
      * @return mixed
@@ -466,17 +450,19 @@ class TeamStatistic
         return $this;
     }
 
-    public function getTeams(): ?Team
+    public function getTeam(): ?Team
     {
-        return $this->teams;
+        return $this->team;
     }
 
-    public function setTeams(?Team $teams): self
+    public function setTeam(?Team $team): self
     {
-        $this->teams = $teams;
+        $this->team = $team;
 
         return $this;
     }
+
+
 
 
 

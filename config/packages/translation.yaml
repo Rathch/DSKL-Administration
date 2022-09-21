@@ -1,5 +1,5 @@
 framework:
-    default_locale: en
+    default_locale: de
     translator:
         default_path: '%kernel.project_dir%/translations'
         fallbacks:
@@ -48,7 +48,7 @@ jms_translation:
 
             # If empty it uses the format of existing files
             # Possible values ["php", "xliff", "yaml", "xlf"]
-            output_format: 'xliff'
+            output_format: 'yaml'
 
             # The default output format (defaults to xlf)
             default_output_format: "xlf"

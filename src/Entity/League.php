@@ -20,7 +20,7 @@ class League
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="text")
      */
     private $date;
 

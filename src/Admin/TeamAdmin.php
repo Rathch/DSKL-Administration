@@ -16,7 +16,7 @@ final class TeamAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $this->getAdd($filter) ->add('active', null, ["label" => "active"]);
+        $this->getAdd($filter)->add('active', null, ["label" => "active"])->add('id', null, ["label" => "id"]);
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -41,7 +41,7 @@ final class TeamAdmin extends AbstractAdmin
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $this->getAdd($show);
+        $this->getAdd($show)->add('id', null, ["label" => "id"]);
     }
 
     /**
@@ -50,7 +50,6 @@ final class TeamAdmin extends AbstractAdmin
     protected function getAdd($filter)
     {
         $filter
-            ->add('id', null, ["label" => "id"])
             ->add('name', null, ["label" => "name"])
             ->add('professionalism', null, ["label" => "professionalism"])
             ->add('brutality', null, ["label" => "brutality"])

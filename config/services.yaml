@@ -47,8 +47,3 @@ services:
         class: App\Admin\PlayDayAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: admin, label: PlayDay }
-
-    admin.league:
-        class: App\Admin\LeagueAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
